@@ -6,15 +6,12 @@ import TypingText from '@/components/TypingText';
 import { FINAL_MESSAGE } from '@/lib/constants';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-
-const QUIZ_ANSWERS_STORAGE_KEY = 'for-her:quizAnswers:v1';
-
-type StoredQuizAnswer = {
-  questionId: number;
-  question: string;
-  answer: string;
-  at: string;
-};
+import {
+  clearQuizAnswers,
+  getQuizAnswers,
+  QUIZ_ANSWERS_STORAGE_KEY,
+  type StoredQuizAnswer,
+} from '@/lib/quizAnswersStorage';
 
 // Lazy load particles
 const FloatingParticles = dynamic(() => import('@/components/FloatingParticles'), {
@@ -38,33 +35,7 @@ export default function FinalPage() {
   };
 
   const loadAnswers = () => {
-    try {
-      const raw = localStorage.getItem(QUIZ_ANSWERS_STORAGE_KEY);
-      if (!raw) {
-        setQuizAnswers([]);
-        return;
-      }
-
-      const parsed = JSON.parse(raw) as StoredQuizAnswer[];
-      if (!Array.isArray(parsed)) {
-        setQuizAnswers([]);
-        return;
-      }
-
-      const normalized = parsed
-        .filter(
-          (item) =>
-            item &&
-            typeof item.questionId === 'number' &&
-            typeof item.question === 'string' &&
-            typeof item.answer === 'string'
-        )
-        .sort((a, b) => a.questionId - b.questionId);
-
-      setQuizAnswers(normalized);
-    } catch {
-      setQuizAnswers([]);
-    }
+    setQuizAnswers(getQuizAnswers());
   };
 
   useEffect(() => {
@@ -125,7 +96,7 @@ export default function FinalPage() {
         </motion.div>
 
         {/* Photo placeholders */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-10 md:mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 mb-10 md:mb-12">
           <div className="glass-card overflow-hidden">
             <div className="relative aspect-[4/5] w-full">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(242,153,74,0.16),transparent_65%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))]" />
@@ -227,11 +198,7 @@ export default function FinalPage() {
                   <button
                     type="button"
                     onClick={() => {
-                      try {
-                        localStorage.removeItem(QUIZ_ANSWERS_STORAGE_KEY);
-                      } catch {
-                        // ignore
-                      }
+                      clearQuizAnswers();
                       loadAnswers();
                     }}
                     className="h-10 px-4 rounded-full border border-white/15 bg-white/[0.05] text-[#F5EBD9]/80 hover:bg-white/[0.08] transition"
@@ -248,7 +215,7 @@ export default function FinalPage() {
                   </p>
                 </div>
               ) : (
-                <div className="mt-6 space-y-3">
+                <div className="mt-6 space-y-4">
                   {quizAnswers.map((item, index) => (
                     <div
                       key={`${item.questionId}-${index}`}
