@@ -173,72 +173,15 @@ export default function FinalPage() {
           <div className="glass-card card-padding text-left">
             <div className="relative z-10">
               <p className="text-xs tracking-[0.32em] uppercase text-[#F5EBD9]/55">
-                Your answers
-              </p>
-              <h2 className="mt-3 font-serif text-2xl md:text-3xl leading-tight">
                 The little things you chose.
-              </h2>
+              </p>
+              
               <p className="mt-4 text-base text-[#F5EBD9]/70 leading-relaxed">
                 I saved them here so we can remember.
               </p>
-
-              <div className="mt-5 flex items-center justify-between gap-3">
-                <p className="text-sm text-[#F5EBD9]/55">
-                  Saved on this device/browser • {answersCountLabel}
-                </p>
-
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={loadAnswers}
-                    className="h-10 px-4 rounded-full border border-white/15 bg-white/[0.05] text-[#F5EBD9] hover:bg-white/[0.08] transition"
-                  >
-                    Refresh
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      clearQuizAnswers();
-                      loadAnswers();
-                    }}
-                    className="h-10 px-4 rounded-full border border-white/15 bg-white/[0.05] text-[#F5EBD9]/80 hover:bg-white/[0.08] transition"
-                  >
-                    Clear
-                  </button>
-                </div>
-              </div>
-
-              {!hasAnswers ? (
-                <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4">
-                  <p className="text-[#F5EBD9]/70">
-                    No answers found yet. Try taking the quiz first, then come back here.
-                  </p>
-                </div>
-              ) : (
-                <div className="mt-6 space-y-4">
-                  {quizAnswers.map((item, index) => (
-                    <div
-                      key={`${item.questionId}-${index}`}
-                      className="rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4"
-                    >
-                      <p className="text-xs tracking-[0.28em] uppercase text-[#F5EBD9]/55">
-                        Q{index + 1}
-                      </p>
-                      <p className="mt-2 text-base md:text-lg text-[#F5EBD9]/85 leading-relaxed">
-                        {item.question}
-                      </p>
-                      <p className="mt-3 text-base md:text-lg font-semibold text-[#F5EBD9]">
-                        {item.answer}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           </div>
         </div>
-
-        {/* Countdown */}
 
         {/* Hidden letter button */}
         <motion.div
