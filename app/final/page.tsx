@@ -38,12 +38,19 @@ export default function FinalPage() {
     setTimeout(() => setShowCountdown(true), 1000);
   };
 
-  useEffect(() => {
+  const loadAnswers = () => {
     try {
       const raw = localStorage.getItem(QUIZ_ANSWERS_STORAGE_KEY);
-      if (!raw) return;
+      if (!raw) {
+        setQuizAnswers([]);
+        return;
+      }
+
       const parsed = JSON.parse(raw) as StoredQuizAnswer[];
-      if (!Array.isArray(parsed)) return;
+      if (!Array.isArray(parsed)) {
+        setQuizAnswers([]);
+        return;
+      }
 
       const normalized = parsed
         .filter(
@@ -57,8 +64,22 @@ export default function FinalPage() {
 
       setQuizAnswers(normalized);
     } catch {
-      // ignore
+      setQuizAnswers([]);
     }
+  };
+
+  useEffect(() => {
+    loadAnswers();
+
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === QUIZ_ANSWERS_STORAGE_KEY) {
+        loadAnswers();
+      }
+    };
+
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const hasAnswers = useMemo(() => quizAnswers.length > 0, [quizAnswers.length]);
@@ -118,9 +139,6 @@ export default function FinalPage() {
               />
               <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-6">
                 <div className="w-full rounded-2xl bg-black/35 backdrop-blur-sm border border-white/10 px-4 py-3">
-                  <p className="text-sm tracking-[0.28em] uppercase text-[#F5EBD9]/70">
-                    Memory 5
-                  </p>
                 </div>
               </div>
             </div>
@@ -139,9 +157,6 @@ export default function FinalPage() {
               />
               <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-6">
                 <div className="w-full rounded-2xl bg-black/35 backdrop-blur-sm border border-white/10 px-4 py-3">
-                  <p className="text-sm tracking-[0.28em] uppercase text-[#F5EBD9]/70">
-                    Memory 6
-                  </p>
                 </div>
               </div>
             </div>
@@ -195,6 +210,19 @@ export default function FinalPage() {
               <p className="mt-4 text-base text-[#F5EBD9]/70 leading-relaxed">
                 I saved them here so we can remember.
               </p>
+
+              <div className="mt-5 flex items-center justify-between gap-3">
+                <p className="text-sm text-[#F5EBD9]/55">
+                  Saved on this device/browser.
+                </p>
+                <button
+                  type="button"
+                  onClick={loadAnswers}
+                  className="h-10 px-4 rounded-full border border-white/15 bg-white/[0.05] text-[#F5EBD9] hover:bg-white/[0.08] transition"
+                >
+                  Refresh
+                </button>
+              </div>
 
               {!hasAnswers ? (
                 <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4">
