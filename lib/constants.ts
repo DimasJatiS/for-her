@@ -16,8 +16,8 @@ export const ANIMATION_DURATIONS = {
 export const QUIZ_QUESTIONS = [
   {
     id: 1,
-    question: "Where was our first date?",
-    options: ["Coffee shop", "Restaurant", "Park", "Cinema"],
+    question: "Bunga warna apa yang pertama kali datang ke tangan sayang?",
+    options: ["Pink", "Blue", "Violet", "Orange"],
     correctAnswer: 0, // Index of correct answer
   },
   {
@@ -29,14 +29,20 @@ export const QUIZ_QUESTIONS = [
   {
     id: 3,
     question: "What is our song?",
-    options: ["Perfect by Ed Sheeran", "A Thousand Years", "All of Me", "Thinking Out Loud"],
+    options: ["Photograph", "Afterglow by Ed Sheeran", "Forever & Always", "Meant To Be"],
     correctAnswer: 0,
   },
   {
     id: 4,
     question: "What do you love most about us?",
-    options: ["How we laugh together", "How we understand each other", "Our adventures", "Everything"],
+    options: ["How we laugh together", "How we understand each other", "Our adventures", "Our lips's"],
     correctAnswer: 3,
+  },
+    {
+    id: 5,
+    question: "Hal apa yang masih mas pegang milik kita?",
+    options: ["Little Bunny pin", "Surat-surat cinta", "Hugs & Kisses", "Our First Photos"],
+    correctAnswer: 0,
   },
 ];
 
@@ -50,8 +56,8 @@ export const STORY_SECTIONS = [
   },
   {
     id: 2,
-    title: "First Laugh",
-    text: "When you smiled... my world changed forever.",
+    title: "The smile",
+    text: "When you smiled... my world my day changed forever.",
     image: "/images/memory-2.png",
     delay: 0.3,
   },

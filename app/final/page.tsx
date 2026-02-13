@@ -6,6 +6,7 @@ import TypingText from '@/components/TypingText';
 import Countdown from '@/components/Countdown';
 import { FINAL_MESSAGE } from '@/lib/constants';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
 // Lazy load particles
 const FloatingParticles = dynamic(() => import('@/components/FloatingParticles'), {
@@ -72,14 +73,20 @@ export default function FinalPage() {
           <div className="glass-card overflow-hidden">
             <div className="relative aspect-[4/5] w-full">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(242,153,74,0.16),transparent_65%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))]" />
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-                <div className="text-4xl">🖼️</div>
-                <p className="mt-3 text-sm tracking-[0.28em] uppercase text-[#F5EBD9]/60">
-                  Photo 1
-                </p>
-                <p className="mt-2 text-base text-[#F5EBD9]/70">
-                  Replace this placeholder with your memory.
-                </p>
+              <Image
+                src="/images/memory-5.png"
+                alt="Memory 5"
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, 50vw"
+                priority={false}
+              />
+              <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-6">
+                <div className="w-full rounded-2xl bg-black/35 backdrop-blur-sm border border-white/10 px-4 py-3">
+                  <p className="text-sm tracking-[0.28em] uppercase text-[#F5EBD9]/70">
+                    Memory 5
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -87,14 +94,20 @@ export default function FinalPage() {
           <div className="glass-card overflow-hidden">
             <div className="relative aspect-[4/5] w-full">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,163,115,0.16),transparent_65%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))]" />
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-                <div className="text-4xl">🖼️</div>
-                <p className="mt-3 text-sm tracking-[0.28em] uppercase text-[#F5EBD9]/60">
-                  Photo 2
-                </p>
-                <p className="mt-2 text-base text-[#F5EBD9]/70">
-                  Replace this placeholder with your memory.
-                </p>
+              <Image
+                src="/images/memory-6.png"
+                alt="Memory 6"
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, 50vw"
+                priority={false}
+              />
+              <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-6 pb-6">
+                <div className="w-full rounded-2xl bg-black/35 backdrop-blur-sm border border-white/10 px-4 py-3">
+                  <p className="text-sm tracking-[0.28em] uppercase text-[#F5EBD9]/70">
+                    Memory 6
+                  </p>
+                </div>
               </div>
             </div>
           </div>

@@ -29,15 +29,14 @@ export default function Home() {
             <div className="glass-card card-padding w-full max-w-xl">
               <div className="relative z-10">
                 <p className="text-xs tracking-[0.32em] uppercase text-[#F5EBD9]/55">
-                  For Her
+                  Untuk Sayangku
                 </p>
                 <h1 className="mt-4 font-serif text-4xl md:text-5xl leading-tight tracking-tight">
-                  A little journey,
-                  <span className="block text-[#D4A373]">made with love.</span>
+                  I made a little journey,
+                  <span className="block text-[#D4A373]">made with love, made with care.</span>
                 </h1>
                 <p className="mt-6 text-base md:text-lg text-[#F5EBD9]/75 leading-relaxed">
-                  Take a deep breath. Tap start. I’ll guide you through a few
-                  pages—stories, a tiny quiz, and a small promise at the end.
+                  Take a deep breath. Tap start. promise your smile at the end.
                 </p>
 
                 <div className="mt-10 flex flex-col sm:flex-row gap-3">
@@ -48,17 +47,10 @@ export default function Home() {
                   >
                     Start
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => router.push("/quiz")}
-                    className="h-12 px-6 rounded-full border border-white/15 bg-white/[0.05] text-[#F5EBD9] hover:bg-white/[0.08] transition"
-                  >
-                    Skip to Quiz
-                  </button>
                 </div>
 
                 <p className="mt-8 text-xs text-[#F5EBD9]/55">
-                  Best experienced with sound on.
+                  Put the sound on!!! kalau mati hidupin lagi.
                 </p>
               </div>
             </div>
