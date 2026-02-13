@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --card-pad: 3rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --card-pad: 4rem;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans), sans-serif;
+  overflow-x: hidden;
+  min-height: 100dvh;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Custom card padding classes */
+.card-padding {
+  padding: var(--card-pad);
+}
+
+/* Shared glass card styling (use together with .card-padding) */
+.glass-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(212, 163, 115, 0.08),
+    transparent 55%
+  );
+}
+
+/* Progress section padding */
+.progress-padding {
+  margin-bottom: 4rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Custom scrollbar - Maroon theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(43, 15, 26, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 163, 115, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 163, 115, 0.8);
+}
+
