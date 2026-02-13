@@ -17,8 +17,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "For Her 🤍",
-  description: "A special journey crafted with love",
+  title: "Untuk Sayangku 🤍",
+  description: "A special creation brings love",
 };
 
 export default function RootLayout({
