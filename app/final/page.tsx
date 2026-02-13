@@ -14,7 +14,11 @@ const FloatingParticles = dynamic(() => import('@/components/FloatingParticles')
 
 export default function FinalPage() {
   const [showLetter, setShowLetter] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
+  const [videoError, setVideoError] = useState(false);
   const [showCountdown, setShowCountdown] = useState(false);
+
+  const videoSrc = '/video/our-video.mp4';
 
   // Set your special date here
   const nextSpecialDate = new Date('2026-03-14T00:00:00'); // Example: March 14, 2026
@@ -96,6 +100,40 @@ export default function FinalPage() {
           </div>
         </div>
 
+        {/* Video */}
+        <div className="mb-10 md:mb-12">
+          <div className="glass-card card-padding">
+            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-left">
+              <div>
+                <p className="text-xs tracking-[0.32em] uppercase text-[#F5EBD9]/55">
+                  A short clip
+                </p>
+                <h2 className="mt-3 font-serif text-2xl md:text-3xl leading-tight">
+                  One more memory,
+                  <span className="block text-[#D4A373]">in motion.</span>
+                </h2>
+                <p className="mt-4 text-base text-[#F5EBD9]/70 leading-relaxed max-w-xl">
+                  Tap play to watch our little video. It’s saved inside the site at
+                  <span className="text-[#F5EBD9]/80"> {videoSrc}</span>.
+                </p>
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                type="button"
+                onClick={() => {
+                  setVideoError(false);
+                  setShowVideo(true);
+                }}
+                className="h-12 md:h-14 px-6 md:px-8 rounded-full font-semibold text-base md:text-lg text-[#1B0710] bg-gradient-to-r from-[#F2994A] via-[#D4A373] to-[#F5EBD9] shadow-[0_16px_45px_rgba(242,153,74,0.16)] hover:brightness-[1.03] active:brightness-[0.98] transition whitespace-nowrap"
+              >
+                Play Video ▶
+              </motion.button>
+            </div>
+          </div>
+        </div>
+
         {/* Countdown */}
         <AnimatePresence>
           {showCountdown && (
@@ -163,6 +201,66 @@ export default function FinalPage() {
               >
                 Close
               </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Video modal */}
+      <AnimatePresence>
+        {showVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowVideo(false)}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center px-4"
+          >
+            <motion.div
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="glass-card w-full max-w-3xl overflow-hidden"
+            >
+              <div className="p-5 md:p-6 border-b border-white/10 flex items-center justify-between">
+                <div>
+                  <p className="text-xs tracking-[0.32em] uppercase text-[#F5EBD9]/55">Video</p>
+                  <p className="mt-1 text-sm text-[#F5EBD9]/70">{videoSrc}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowVideo(false)}
+                  className="h-10 px-4 rounded-full border border-white/15 bg-white/[0.05] text-[#F5EBD9] hover:bg-white/[0.08] transition"
+                >
+                  Close
+                </button>
+              </div>
+
+              <div className="p-5 md:p-6">
+                {videoError ? (
+                  <div className="text-center py-10">
+                    <p className="text-lg font-semibold">Video not found</p>
+                    <p className="mt-2 text-[#F5EBD9]/70">
+                      Put your file at <span className="text-[#F5EBD9]/85">public/video/our-video.mp4</span>,
+                      commit, then redeploy.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-black/30">
+                    <video
+                      key={videoSrc}
+                      src={videoSrc}
+                      controls
+                      playsInline
+                      preload="metadata"
+                      autoPlay
+                      onError={() => setVideoError(true)}
+                      className="block w-full h-auto"
+                    />
+                  </div>
+                )}
+              </div>
             </motion.div>
           </motion.div>
         )}
