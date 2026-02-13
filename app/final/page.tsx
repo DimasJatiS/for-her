@@ -1,12 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TypingText from '@/components/TypingText';
 import Countdown from '@/components/Countdown';
 import { FINAL_MESSAGE } from '@/lib/constants';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+
+const QUIZ_ANSWERS_STORAGE_KEY = 'for-her:quizAnswers:v1';
+
+type StoredQuizAnswer = {
+  questionId: number;
+  question: string;
+  answer: string;
+  at: string;
+};
 
 // Lazy load particles
 const FloatingParticles = dynamic(() => import('@/components/FloatingParticles'), {
@@ -18,6 +27,7 @@ export default function FinalPage() {
   const [showVideo, setShowVideo] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const [showCountdown, setShowCountdown] = useState(false);
+  const [quizAnswers, setQuizAnswers] = useState<StoredQuizAnswer[]>([]);
 
   const videoSrc = '/video/our-video.mp4';
 
@@ -27,6 +37,31 @@ export default function FinalPage() {
   const handleTypingComplete = () => {
     setTimeout(() => setShowCountdown(true), 1000);
   };
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(QUIZ_ANSWERS_STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as StoredQuizAnswer[];
+      if (!Array.isArray(parsed)) return;
+
+      const normalized = parsed
+        .filter(
+          (item) =>
+            item &&
+            typeof item.questionId === 'number' &&
+            typeof item.question === 'string' &&
+            typeof item.answer === 'string'
+        )
+        .sort((a, b) => a.questionId - b.questionId);
+
+      setQuizAnswers(normalized);
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const hasAnswers = useMemo(() => quizAnswers.length > 0, [quizAnswers.length]);
 
   return (
     <main className="min-h-[100svh] flex items-center justify-center relative overflow-hidden px-6 py-20 text-[#F5EBD9]">
@@ -143,6 +178,50 @@ export default function FinalPage() {
               >
                 Play Video ▶
               </motion.button>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz answers */}
+        <div className="mb-10 md:mb-12">
+          <div className="glass-card card-padding text-left">
+            <div className="relative z-10">
+              <p className="text-xs tracking-[0.32em] uppercase text-[#F5EBD9]/55">
+                Your answers
+              </p>
+              <h2 className="mt-3 font-serif text-2xl md:text-3xl leading-tight">
+                The little things you chose.
+              </h2>
+              <p className="mt-4 text-base text-[#F5EBD9]/70 leading-relaxed">
+                I saved them here so we can remember.
+              </p>
+
+              {!hasAnswers ? (
+                <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4">
+                  <p className="text-[#F5EBD9]/70">
+                    No answers found yet. Try taking the quiz first, then come back here.
+                  </p>
+                </div>
+              ) : (
+                <div className="mt-6 space-y-3">
+                  {quizAnswers.map((item, index) => (
+                    <div
+                      key={`${item.questionId}-${index}`}
+                      className="rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4"
+                    >
+                      <p className="text-xs tracking-[0.28em] uppercase text-[#F5EBD9]/55">
+                        Q{index + 1}
+                      </p>
+                      <p className="mt-2 text-base md:text-lg text-[#F5EBD9]/85 leading-relaxed">
+                        {item.question}
+                      </p>
+                      <p className="mt-3 text-base md:text-lg font-semibold text-[#F5EBD9]">
+                        {item.answer}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

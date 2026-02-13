@@ -75,7 +75,7 @@ export default function StoryPageClient() {
                 How Well Do You Remember Us?
               </h2>
               <p className="text-xl md:text-2xl text-[#E6C9A8]/80 leading-relaxed tracking-wide">
-                Let's dig dive and &see if you've been paying attention... 💕
+                Let's dig dive and & see if you've been paying attention... 💕
               </p>
             </motion.div>
 

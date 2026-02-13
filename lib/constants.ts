@@ -57,7 +57,7 @@ export const STORY_SECTIONS = [
   {
     id: 2,
     title: "The smile",
-    text: "When you smiled... my world my day changed forever.",
+    text: "When you smiled... my world, my day changed forever.",
     image: "/images/memory-2.png",
     delay: 0.3,
   },
@@ -83,7 +83,7 @@ My Dearest Love,
 Every day with you feels like a dream I never want to wake up from.
 You've taught me what it means to truly love and be loved.
 
-Thank you for being my light, my home, my everything.
+Thank you for being my light, my home, my everything, the warmest thing in my life.
 
 This is just the beginning of our forever.
 
