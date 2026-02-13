@@ -173,16 +173,18 @@ export default function FinalPage() {
           <div className="glass-card card-padding text-left">
             <div className="relative z-10">
               <p className="text-xs tracking-[0.32em] uppercase text-[#F5EBD9]/55">
-                The little things you chose.
+                Sayaang
               </p>
-              
+              <h2 className="mt-3 font-serif text-2xl md:text-3xl leading-tight">
+                The little things you chose.
+              </h2>
               <p className="mt-4 text-base text-[#F5EBD9]/70 leading-relaxed">
                 I saved them here so we can remember.
               </p>
             </div>
           </div>
         </div>
-
+        
         {/* Hidden letter button */}
         <motion.div
           initial={{ opacity: 0 }}
