@@ -22,18 +22,29 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
   const [volume, setVolumeState] = useState(MUSIC_CONFIG.volume);
   const [isReady, setIsReady] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const fadeIntervalRef = useRef<number | null>(null);
 
   useEffect(() => {
     // Initialize audio element
     audioRef.current = new Audio('/audio/background-music.mp3');
     audioRef.current.loop = MUSIC_CONFIG.loop;
     audioRef.current.volume = 0;
+    audioRef.current.preload = 'auto';
     
     audioRef.current.addEventListener('canplaythrough', () => {
       setIsReady(true);
     });
 
+    audioRef.current.addEventListener('error', () => {
+      // Helpful signal when the mp3 is missing in production
+      setIsReady(false);
+    });
+
     return () => {
+      if (fadeIntervalRef.current) {
+        window.clearInterval(fadeIntervalRef.current);
+        fadeIntervalRef.current = null;
+      }
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
@@ -42,24 +53,49 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const play = useCallback(() => {
-    if (audioRef.current && isReady) {
-      // Fade in volume
-      const fadeIn = setInterval(() => {
-        if (audioRef.current && audioRef.current.volume < volume) {
-          const newVolume = Math.min(audioRef.current.volume + 0.02, volume);
-          audioRef.current.volume = newVolume;
-        } else {
-          clearInterval(fadeIn);
-        }
-      }, MUSIC_CONFIG.fadeInDuration / 50);
+    if (!audioRef.current) return;
 
-      audioRef.current.play().catch((e) => console.error('Audio play failed:', e));
-      setIsPlaying(true);
+    // Cancel any previous fades
+    if (fadeIntervalRef.current) {
+      window.clearInterval(fadeIntervalRef.current);
+      fadeIntervalRef.current = null;
     }
-  }, [isReady, volume]);
+
+    // Keep mute state consistent
+    audioRef.current.muted = isMuted;
+
+    // Attempt to play immediately (must be called from a user gesture on iOS)
+    audioRef.current
+      .play()
+      .then(() => {
+        setIsPlaying(true);
+
+        // Fade in volume
+        fadeIntervalRef.current = window.setInterval(() => {
+          if (!audioRef.current) return;
+
+          if (audioRef.current.volume < volume) {
+            const newVolume = Math.min(audioRef.current.volume + 0.02, volume);
+            audioRef.current.volume = newVolume;
+          } else if (fadeIntervalRef.current) {
+            window.clearInterval(fadeIntervalRef.current);
+            fadeIntervalRef.current = null;
+          }
+        }, MUSIC_CONFIG.fadeInDuration / 50);
+      })
+      .catch((e) => {
+        // Most common reasons: missing mp3 (404) or autoplay restriction
+        console.error('Audio play failed:', e);
+        setIsPlaying(false);
+      });
+  }, [isMuted, volume]);
 
   const pause = useCallback(() => {
     if (audioRef.current) {
+      if (fadeIntervalRef.current) {
+        window.clearInterval(fadeIntervalRef.current);
+        fadeIntervalRef.current = null;
+      }
       audioRef.current.pause();
       setIsPlaying(false);
     }
