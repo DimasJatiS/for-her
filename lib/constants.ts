@@ -78,17 +78,20 @@ export const STORY_SECTIONS = [
 ];
 
 export const FINAL_MESSAGE = `
-My Dearest Love,
+Dear Dearest,
 
-Every day with you feels like a dream I never want to wake up from.
+Sayang, Every day with you feels like a dream I never want to wake up from.
+Nikmatnya, indahnya, bahagianya aku jalani setiap hari bersamamu.
 You've taught me what it means to truly love and be loved.
+
+No words can fully capture how much you mean to me.
 
 Thank you for being my light, my home, my everything, the warmest thing in my life.
 
 This is just the beginning of our forever.
 
 With all my heart,
-Always yours 🤍
+Always yours sayangku🤍
 `;
 
 export const COLORS = {
