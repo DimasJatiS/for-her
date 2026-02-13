@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TypingText from '@/components/TypingText';
-import Countdown from '@/components/Countdown';
 import { FINAL_MESSAGE } from '@/lib/constants';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -255,21 +254,6 @@ export default function FinalPage() {
         </div>
 
         {/* Countdown */}
-        <AnimatePresence>
-          {showCountdown && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mb-10 md:mb-12"
-            >
-              <div className="glass-card card-padding">
-                <div className="relative z-10">
-                  <Countdown targetDate={nextSpecialDate} label="Until our next adventure" />
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* Hidden letter button */}
         <motion.div
@@ -309,10 +293,17 @@ export default function FinalPage() {
                 P.S.
               </h3>
               <p className="text-[#2B0F1A] text-xl md:text-2xl leading-relaxed text-center mb-10">
-                Every moment I spend with you is my favorite moment.
+                Happy valentine's Day, sayangku.
+                <br /><br />
+                Makasih yaa udah mau sama mas, menjalani hari-hari bersama mas.
+                Mas mungkin memang gabisa kasih apa-apa yang wah, tapi mas janji akan selalu berusaha jadi yang terbaik buat sayang.
                 <br /><br />
                 Thank you for being you.
+                Thank you for choosing me.
+                Thank you to be the best part of my life.
                 <br /><br />
+                forever and always rightt...,
+                <br />
                 I love you more than words can say. 🤍
               </p>
               <button

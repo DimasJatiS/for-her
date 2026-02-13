@@ -81,7 +81,7 @@ export const FINAL_MESSAGE = `
 Dear Dearest,
 
 Sayang, Every day with you feels like a dream I never want to wake up from.
-Nikmatnya, indahnya, bahagianya aku jalani setiap hari bersamamu.
+Nikmatnya, indahnya, bahagianya dapat mas jalani setiap hari bersama sayang.
 You've taught me what it means to truly love and be loved.
 
 No words can fully capture how much you mean to me.
