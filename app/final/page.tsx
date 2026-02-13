@@ -82,6 +82,7 @@ export default function FinalPage() {
   }, []);
 
   const hasAnswers = useMemo(() => quizAnswers.length > 0, [quizAnswers.length]);
+  const answersCountLabel = useMemo(() => `${quizAnswers.length} saved`, [quizAnswers.length]);
 
   return (
     <main className="min-h-[100svh] flex items-center justify-center relative overflow-hidden px-6 py-20 text-[#F5EBD9]">
@@ -212,15 +213,32 @@ export default function FinalPage() {
 
               <div className="mt-5 flex items-center justify-between gap-3">
                 <p className="text-sm text-[#F5EBD9]/55">
-                  Saved on this device/browser.
+                  Saved on this device/browser • {answersCountLabel}
                 </p>
-                <button
-                  type="button"
-                  onClick={loadAnswers}
-                  className="h-10 px-4 rounded-full border border-white/15 bg-white/[0.05] text-[#F5EBD9] hover:bg-white/[0.08] transition"
-                >
-                  Refresh
-                </button>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={loadAnswers}
+                    className="h-10 px-4 rounded-full border border-white/15 bg-white/[0.05] text-[#F5EBD9] hover:bg-white/[0.08] transition"
+                  >
+                    Refresh
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      try {
+                        localStorage.removeItem(QUIZ_ANSWERS_STORAGE_KEY);
+                      } catch {
+                        // ignore
+                      }
+                      loadAnswers();
+                    }}
+                    className="h-10 px-4 rounded-full border border-white/15 bg-white/[0.05] text-[#F5EBD9]/80 hover:bg-white/[0.08] transition"
+                  >
+                    Clear
+                  </button>
+                </div>
               </div>
 
               {!hasAnswers ? (
@@ -335,10 +353,7 @@ export default function FinalPage() {
               className="glass-card w-full max-w-3xl overflow-hidden"
             >
               <div className="p-5 md:p-6 border-b border-white/10 flex items-center justify-between">
-                <div>
-                  <p className="text-xs tracking-[0.32em] uppercase text-[#F5EBD9]/55">Video</p>
-                  <p className="mt-1 text-sm text-[#F5EBD9]/70">{videoSrc}</p>
-                </div>
+                <h3 className="text-lg md:text-xl font-semibold text-[#F5EBD9]">Our Video</h3>
                 <button
                   type="button"
                   onClick={() => setShowVideo(false)}
